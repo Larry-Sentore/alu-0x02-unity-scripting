@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     public float movementSpeed;
 
+    private int score = 0;
     private Rigidbody playerRigidbody;
     private Vector3 movementInput;
 
@@ -24,5 +25,17 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         playerRigidbody.AddForce(movementInput * movementSpeed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Pickup"))
+        {
+            return;
+        }
+
+        score++;
+        Debug.Log($"Score: {score}");
+        Destroy(other.gameObject);
     }
 }
