@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 movementInput;
 
+    public int health = 5;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -29,6 +31,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Trap"))
+        {
+            health--;
+            Debug.Log($"Health: {health}");
+            return;
+        }
+
         if (!other.CompareTag("Pickup"))
         {
             return;
