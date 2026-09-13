@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (health == 0)
+        {
+            Debug.Log("Game Over!");
+            health = 5;
+            score = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            return;
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -31,6 +41,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Goal"))
+        {
+            Debug.Log("You win!");
+            return;
+        }
+
         if (other.CompareTag("Trap"))
         {
             health--;
